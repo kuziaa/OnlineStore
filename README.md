@@ -1,1 +1,1 @@
-#02_git study project
+# 02_git study project
