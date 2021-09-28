@@ -3,15 +3,12 @@ package store;
 import category.Category;
 import product.Product;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class Store {
 
-    ArrayList<Category> categories = new ArrayList<>();
+    private ArrayList<Category> categories = new ArrayList<>();
 
     public ArrayList<String> getCategoriesNames() {
         ArrayList<String> categoriesNames = new ArrayList<>();
@@ -22,17 +19,17 @@ public class Store {
     }
 
     public void addCategory(Category newCategory) {
-        if (ifUniqueCategory(newCategory)) {
+        if (isUniqueCategory(newCategory)) {
             categories.add(newCategory);
         } else {
             System.out.println("Category was not added. Category with such a name already existed");
         }
     }
 
-    private boolean ifUniqueCategory(Category newCategory) {
+    private boolean isUniqueCategory(Category newCategory) {
+        String newCategoryName = newCategory.getCategoryName();
         for (Category category : categories) {
             String categoryName = category.getCategoryName();
-            String newCategoryName = newCategory.getCategoryName();
             if (categoryName.equals(newCategoryName)) return false;
         }
         return true;
@@ -60,8 +57,10 @@ public class Store {
             while ((line = reader.readLine()) != null) {
                 CategoriesNames.add(line);
             }
+        } catch (FileNotFoundException e) {
+            System.out.println("File " + fileAddress + " was not found");
         } catch (IOException e) {
-            System.out.println("Exception" + e);
+            System.out.println("There is some problems with file reading" + fileAddress + "\n" + e);
         }
         return CategoriesNames;
     }

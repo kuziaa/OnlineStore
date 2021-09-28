@@ -7,9 +7,9 @@ public class Product {
         this.price = price;
     }
 
-    private final String name;
-    private final double rate;
-    private final double price;
+    private String name;
+    private double rate;
+    private double price;
 
     public String getName() {
         return name;
