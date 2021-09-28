@@ -7,7 +7,7 @@ Please create GitHub repo and append your trainer to this repo!
 
 While doing each task, you should create a separate branch with the name of the topic, e.g. 02_git, push you task code to this branch and create a pull request from your branch to master branch, and assign it to your trainer.
 
-Status: complited;
+Status: completed;
 
 ## Task 03_oop
 Before start creating source code, read carefully all materials about OOP. It is not only 3 principles for interview;)
