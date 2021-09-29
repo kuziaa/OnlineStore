@@ -5,13 +5,25 @@ import product.Product;
 import store.Store;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.Callable;
 
 public class RandomStorePopulator {
 
-    private final Faker faker = new Faker();
+    private static final Faker faker = new Faker();
+    private static final Map <String, Callable <String>> availableCategories = new HashMap<>();
 
-    private String getRandomProductName() {
-        return faker.food().ingredient();
+    static {
+        availableCategories.put("Fruits", () -> faker.food().fruit());
+        availableCategories.put("Sushi", () -> faker.food().sushi());
+        availableCategories.put("Beer", () -> faker.beer().name());
+        availableCategories.put("Animal", () -> faker.animal().name());
+        availableCategories.put("Book", () ->faker.book().title());
+    }
+
+    private String getRandomProductNameForCategory(String categoryName) throws Exception {
+        return availableCategories.get(categoryName).call();
     }
 
     private double getRandomRate() {
@@ -22,22 +34,28 @@ public class RandomStorePopulator {
         return faker.number().randomDouble(2, 30, 300);
     }
 
-    private Product getRandomProduct() {
-        return new Product(getRandomProductName(), getRandomRate(), getRandomPrice());
+    private Product getRandomProductForCategory(String categoryName) throws Exception {
+        return new Product(getRandomProductNameForCategory(categoryName), getRandomRate(), getRandomPrice());
     }
 
-    private ArrayList<Product> getRandomProducts() {
+    private ArrayList<Product> getRandomProductsForCategory(String categoryName) {
         int numOfProducts = (int) (Math.random() * 10 + 1);
         ArrayList<Product> products = new ArrayList<>();
         for (int i = 0; i < numOfProducts; i++)
-            products.add(getRandomProduct());
+            try {
+                products.add(getRandomProductForCategory(categoryName));
+            } catch (Exception e) {
+                System.out.println("Failed to create a product for category " + categoryName + "\n" + e);
+            }
         return products;
     }
 
-    public void fillOnlineStoreWithRandomProducts(Store store) {
-        ArrayList<String> categoriesNames = store.getCategoriesNames();
-        for (String categoryName : categoriesNames) {
-            store.addProductsInCategoryByName(getRandomProducts(), categoryName);
+    public void fillOnlineStore(Store store) {
+        for(String categoryName: availableCategories.keySet()) {
+            store.addCategoryByClassName(categoryName);
+            ArrayList<Product> products = getRandomProductsForCategory(categoryName);
+            store.addProductsInCategoryByName(products, categoryName);
         }
     }
 }
+

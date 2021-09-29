@@ -22,7 +22,8 @@ public class Store {
         if (isUniqueCategory(newCategory)) {
             categories.add(newCategory);
         } else {
-            System.out.println("Category was not added. Category with such a name already existed");
+            System.out.println("Category " + newCategory.getCategoryName() + " was not added. " +
+                    "Category with such a name already existed");
         }
     }
 
@@ -35,34 +36,19 @@ public class Store {
         return true;
     }
 
-    public void addCategoriesFromFile(String fileAddress) {
-        ArrayList<String> newCategoriesClassNames = loadNewCategoriesNamesFromFile(fileAddress);
-        for (String newCategoryClassName : newCategoriesClassNames) {
-            try {
-                Class<?> clazz = Class.forName("category." + newCategoryClassName);
-                addCategoryByReflection(clazz);
-            } catch (ClassNotFoundException e) {
-                System.out.println("Class with name " + newCategoryClassName + " was not found.");
-            }
+    public void addCategoryByClassName(String newCategoryClassName) {
+        try {
+            Class<?> clazz = Class.forName("category." + newCategoryClassName);
+            addCategoryByReflection(clazz);
+        } catch (ClassNotFoundException e) {
+            System.out.println("Class with name " + newCategoryClassName + " was not found.");
         }
     }
 
-    private ArrayList<String> loadNewCategoriesNamesFromFile(String fileAddress) {
-        ArrayList<String> CategoriesNames = new ArrayList<>();
-        try {
-            File file = new File(fileAddress);
-            FileReader fr = new FileReader(file);
-            BufferedReader reader = new BufferedReader(fr);
-            String line;
-            while ((line = reader.readLine()) != null) {
-                CategoriesNames.add(line);
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("File " + fileAddress + " was not found");
-        } catch (IOException e) {
-            System.out.println("There is some problems with file reading" + fileAddress + "\n" + e);
+    public void addCategoriesByClassNames(ArrayList<String> newCategoriesClassNames) {
+        for(String newCategoryClassName: newCategoriesClassNames) {
+            addCategoryByClassName(newCategoryClassName);
         }
-        return CategoriesNames;
     }
 
     private void addCategoryByReflection(Class<?> newCategoryReflection) {
@@ -77,16 +63,20 @@ public class Store {
         for (Category category : categories) {
             if (category.getCategoryName().equals(categoryName)) {
                 category.addProduct(newProduct);
+                return;
             }
         }
+        System.out.println("Store does not have category " + categoryName + ". Product was not added.");
     }
 
     public void addProductsInCategoryByName(ArrayList<Product> newProducts, String categoryName) {
         for (Category category : categories) {
             if (category.getCategoryName().equals(categoryName)) {
                 category.addProducts(newProducts);
+                return;
             }
         }
+        System.out.println("Store does not have category " + categoryName + ". Products were not added.");
     }
 
     public void showInfo() {

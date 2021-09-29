@@ -3,4 +3,3 @@ Phone
 Milk
 FakeCategory1
 FakeCategory2
-!@#$%^&*()_

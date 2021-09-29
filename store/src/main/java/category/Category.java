@@ -11,7 +11,7 @@ public class Category {
     }
 
     private final String categoryName;
-    private ArrayList<Product> products = new ArrayList<>();
+    private final ArrayList<Product> products = new ArrayList<>();
 
     public String getCategoryName() {
         return categoryName;
@@ -39,18 +39,16 @@ public class Category {
     @Override
     public String toString() {
         StringBuilder categoryInfoInPrettyForm = new StringBuilder();
-        ArrayList<String> productsInfoInPrettyForm = getProductsInfoInPrettyForm();
 
         categoryInfoInPrettyForm.append("•");
         categoryInfoInPrettyForm.append(getCategoryName());
         categoryInfoInPrettyForm.append("\n");
 
-        for (String productInfoInPrettyForm : productsInfoInPrettyForm) {
+        for (String productInfoInPrettyForm : getProductsInfoInPrettyForm()) {
             categoryInfoInPrettyForm.append("\t");
             categoryInfoInPrettyForm.append(productInfoInPrettyForm);
             categoryInfoInPrettyForm.append("\n");
         }
-
         return new String(categoryInfoInPrettyForm);
     }
 }
