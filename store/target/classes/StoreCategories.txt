@@ -1,5 +1,0 @@
-Bike
-Phone
-Milk
-FakeCategory1
-FakeCategory2
