@@ -1,8 +1,8 @@
 package category;
 
-import java.util.ArrayList;
-
 import product.Product;
+
+import java.util.ArrayList;
 
 public class Category {
 

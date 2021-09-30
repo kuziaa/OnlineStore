@@ -1,3 +1,5 @@
+package storeApp;
+
 import randomStorePopulator.RandomStorePopulator;
 import store.Store;
 
