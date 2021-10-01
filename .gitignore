@@ -4,3 +4,7 @@
 
 #Git files
 .git
+
+#Maven files
+target/
+store\target\
