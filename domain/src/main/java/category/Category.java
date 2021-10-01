@@ -3,6 +3,8 @@ package category;
 import product.Product;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Category {
 
@@ -11,13 +13,17 @@ public class Category {
     }
 
     private final String categoryName;
-    private final ArrayList<Product> products = new ArrayList<>();
+    private final Set<Product> products = new HashSet<>();
 
     public String getCategoryName() {
         return categoryName;
     }
 
     public void addProduct(Product newProduct) {
+        if (products.contains(newProduct)) {
+            System.out.println("Product " + newProduct.getName() + " already exist in current category");
+            return;
+        }
         products.add(newProduct);
     }
 
@@ -27,28 +33,41 @@ public class Category {
         }
     }
 
-    private ArrayList<String> getProductsInfoInPrettyForm() {
-        ArrayList<String> productsInfo = new ArrayList<>();
-        for (Product product : products) {
-            String productInfo = "-" + product.getName() + " - " + product.getRate() + "% - " + product.getPrice() + "$";
-            productsInfo.add(productInfo);
+    public void delProduct(String delProductName) {
+        for (Product product: products) {
+            if (product.getName().equals(delProductName)) {
+                products.remove(product);
+                return;
+            }
         }
-        return productsInfo;
+        System.out.println("Product " + delProductName + " was not found to be deleted");
+    }
+
+    public void delAllProducts() {
+        products.clear();
+    }
+
+    public ArrayList<String> getAllProductsInfo() {
+        ArrayList <String> allProductsInfo = new ArrayList<>();
+        for (Product product: products) {
+            allProductsInfo.add(product.toString());
+        }
+        return allProductsInfo;
     }
 
     @Override
     public String toString() {
-        StringBuilder categoryInfoInPrettyForm = new StringBuilder();
+        StringBuilder categoryInfo = new StringBuilder();
 
-        categoryInfoInPrettyForm.append("•");
-        categoryInfoInPrettyForm.append(getCategoryName());
-        categoryInfoInPrettyForm.append("\n");
+        categoryInfo.append("•");
+        categoryInfo.append(getCategoryName());
+        categoryInfo.append("\n");
 
-        for (String productInfoInPrettyForm : getProductsInfoInPrettyForm()) {
-            categoryInfoInPrettyForm.append("\t");
-            categoryInfoInPrettyForm.append(productInfoInPrettyForm);
-            categoryInfoInPrettyForm.append("\n");
+        for (Product product : products) {
+            categoryInfo.append("\t");
+            categoryInfo.append(product.toString());
+            categoryInfo.append("\n");
         }
-        return new String(categoryInfoInPrettyForm);
+        return new String(categoryInfo);
     }
 }
