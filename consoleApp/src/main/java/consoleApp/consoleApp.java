@@ -1,24 +1,16 @@
 package consoleApp;
 
-import storeApp.StoreApp;
-import java.util.Scanner;
+import randomStorePopulator.RandomStorePopulator;
+import store.Store;
 
 public class consoleApp {
     public static void main(String[] args) {
-        StoreApp myStoreApp = new StoreApp();
-        Scanner sc = new Scanner(System.in);
+        Store myStore = new Store();
+        RandomStorePopulator rsp = new RandomStorePopulator();
+        rsp.fillOnlineStore(myStore);
+        myStore.showInfo();
 
-        myStoreApp.executeComand("Fill");
-        while (true) {
-            String newCommand = sc.nextLine();
-            if (newCommand.equals("quit")) {
-                break;
-            }
-            if (!myStoreApp.executeComand(newCommand)) {
-                System.out.println("Incorrect command " + newCommand);
-                myStoreApp.executeComand("Help");
-                continue;
-            }
-        }
+        ConsoleHandler ch = new ConsoleHandler(myStore);
+        ch.run();
     }
 }

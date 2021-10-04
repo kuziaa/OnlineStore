@@ -13,7 +13,7 @@ public class Category {
     }
 
     private final String categoryName;
-    private final Set<Product> products = new HashSet<>();
+    private final ArrayList<Product> products = new ArrayList<>();
 
     public String getCategoryName() {
         return categoryName;
@@ -47,12 +47,16 @@ public class Category {
         products.clear();
     }
 
-    public ArrayList<String> getAllProductsInfo() {
-        ArrayList <String> allProductsInfo = new ArrayList<>();
-        for (Product product: products) {
-            allProductsInfo.add(product.toString());
-        }
-        return allProductsInfo;
+//    public ArrayList<String> getAllProductsInfo() {
+//        ArrayList <String> allProductsInfo = new ArrayList<>();
+//        for (Product product: products) {
+//            allProductsInfo.add(product.toString());
+//        }
+//        return allProductsInfo;
+//    }
+
+    public ArrayList<Product> getAllProducts() {
+        return products;
     }
 
     @Override

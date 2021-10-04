@@ -1,5 +1,6 @@
 package product;
 
+import java.util.Comparator;
 import java.util.Objects;
 
 public class Product {
@@ -50,4 +51,6 @@ public class Product {
     public String toString() {
         return "-" + getName() + " - " + getRate() + "% - " + getPrice() + "$";
     }
+
+
 }

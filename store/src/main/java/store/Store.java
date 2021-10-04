@@ -57,12 +57,20 @@ public class Store {
         return categoriesNames;
     }
 
-    public ArrayList<String> getAllProductsInfo() {
-        ArrayList<String> AllProductsInfo = new ArrayList<>();
-        for (Category category: categories) {
-            AllProductsInfo.addAll(category.getAllProductsInfo());
+//    public ArrayList<String> getAllProductsInfo() {
+//        ArrayList<String> AllProductsInfo = new ArrayList<>();
+//        for (Category category: categories) {
+//            AllProductsInfo.addAll(category.getAllProductsInfo());
+//        }
+//        return AllProductsInfo;
+//    }
+
+    public ArrayList<Product> getAllProducts() {
+        ArrayList<Product> products = new ArrayList<>();
+        for(Category category: categories) {
+            products.addAll(category.getAllProducts());
         }
-        return AllProductsInfo;
+        return products;
     }
 
     private boolean isNewCategory(Category newCategory) {
@@ -98,5 +106,10 @@ public class Store {
         for (Category category : categories) {
             System.out.println(category);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "" + categories;
     }
 }
