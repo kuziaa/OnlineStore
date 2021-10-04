@@ -13,15 +13,11 @@ public class ParserHandler extends DefaultHandler {
     final String TAG_PRICE = "price";
     final String TAG_RATE = "rate";
 
-    private String nameOrder;
-    private String priceOrder;
-    private String rateOrder;
-
     private String currentTegName;
     private boolean isSort = false;
 
     private final Root root = new Root();
-    private Sort sort = new Sort();
+    private final Sort sort = new Sort();
 
     public Root getRoot() {
         return root;
@@ -57,15 +53,15 @@ public class ParserHandler extends DefaultHandler {
         if(isSort) {
             switch (currentTegName) {
                 case TAG_NAME:
-                    nameOrder = new String(ch, start, length);
+                    String nameOrder = new String(ch, start, length);
                     sort.setNameOrder(nameOrder);
                     break;
                 case TAG_PRICE:
-                    priceOrder = new String(ch, start, length);
+                    String priceOrder = new String(ch, start, length);
                     sort.setPriceOrder(priceOrder);
                     break;
                 case TAG_RATE:
-                    rateOrder = new String(ch, start, length);
+                    String rateOrder = new String(ch, start, length);
                     sort.setRateOrder(rateOrder);
                     break;
             }

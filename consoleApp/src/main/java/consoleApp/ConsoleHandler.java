@@ -13,6 +13,7 @@ public class ConsoleHandler {
     private final Scanner sc = new Scanner(System.in);
 
     public void run() {
+
         outer:
         while (true) {
             String command = sc.nextLine();
@@ -25,6 +26,9 @@ public class ConsoleHandler {
                     break;
                 case "top":
                     storeApp.printFiveMostExpensiveProducts();
+                    break;
+                case "showInfo":
+                    storeApp.showInfo();
                     break;
                 case "quit":
                     System.out.println("Buy!");

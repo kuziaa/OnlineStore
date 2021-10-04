@@ -9,6 +9,12 @@ public class Sort {
         this.rateOrder = "no";
     }
 
+    public Sort(String nameOrder, String priceOrder, String rateOrder) {
+        this.nameOrder = nameOrder;
+        this.priceOrder = priceOrder;
+        this.rateOrder = rateOrder;
+    }
+
     static ArrayList<String> accessibleValues = new ArrayList<>();
     static {
         accessibleValues.add("asc");

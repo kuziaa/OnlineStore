@@ -10,11 +10,10 @@ public class Store {
     private final ArrayList<Category> categories = new ArrayList<>();
 
     private void addCategory(Category newCategory) {
-        if (isNewCategory(newCategory)) {
+        if (!categories.contains(newCategory)) {
             categories.add(newCategory);
-        } else {
-            System.out.println("Category " + newCategory.getCategoryName() + " was not added. " +
-                    "Category with such a name already existed");
+        } else {System.out.println("Category " + newCategory.getCategoryName() + " was not added. " +
+                "Category with such a name already existed");
         }
     }
 
@@ -49,29 +48,12 @@ public class Store {
         categories.clear();
     }
 
-    public ArrayList<String> getCategoriesNames() {
-        ArrayList<String> categoriesNames = new ArrayList<>();
-        for (Category category : categories) {
-            categoriesNames.add(category.getCategoryName());
-        }
-        return categoriesNames;
-    }
-
     public ArrayList<Product> getAllProducts() {
         ArrayList<Product> products = new ArrayList<>();
         for(Category category: categories) {
             products.addAll(category.getAllProducts());
         }
         return products;
-    }
-
-    private boolean isNewCategory(Category newCategory) {
-        String newCategoryName = newCategory.getCategoryName();
-        for (Category category : categories) {
-            String categoryName = category.getCategoryName();
-            if (categoryName.equals(newCategoryName)) return false;
-        }
-        return true;
     }
 
     public void addProductInCategory(Product newProduct, String categoryName) {

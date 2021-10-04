@@ -12,17 +12,16 @@ import java.util.ArrayList;
 public class StoreApp {
 
     private final Store myStore = new Store();
-    private Parser parser = new Parser();
-    private Root root = parser.parse();
-    private Sort sort = root.getSort();
+    private final Parser parser = new Parser();
+    private final Root root = parser.parse();
+    private final Sort sort = root.getSort();
 
     public void fillStoreWithRandomCatAndProd() {
         RandomStorePopulator rsp = new RandomStorePopulator();
         rsp.fillOnlineStore(myStore);
     }
 
-    private ArrayList<Product> getSortedProducts(ArrayList<Product> products, String nameOrder,
-                                                 String priceOrder, String rateOrder) {
+    private ArrayList<Product> getSortedProducts(ArrayList<Product> products, Sort sort) {
         ArrayList<Product> sortedProducts = new ArrayList<>(products);
 
         sortedProducts.sort((o1, o2) -> {
@@ -62,14 +61,13 @@ public class StoreApp {
     }
 
     public void printAllSortedProducts() {
-        ArrayList<Product> sortedProducts = getSortedProducts(myStore.getAllProducts(), sort.getNameOrder(),
-                sort.getPriceOrder(), sort.getRateOrder());
+        ArrayList<Product> sortedProducts = getSortedProducts(myStore.getAllProducts(), sort);
         sortedProducts.forEach(System.out::println);
     }
 
     public void printFiveMostExpensiveProducts() {
-        ArrayList<Product> sortedProducts = getSortedProducts(myStore.getAllProducts(),
-                "no", "desc", "no");
+        Sort sort = new Sort("no", "desc", "no");
+        ArrayList<Product> sortedProducts = getSortedProducts(myStore.getAllProducts(), sort);
         for(int i = 0; i < 5; i++) {
             System.out.println(sortedProducts.get(i));
         }

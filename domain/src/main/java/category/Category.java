@@ -3,6 +3,7 @@ package category;
 import product.Product;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Category {
 
@@ -47,6 +48,19 @@ public class Category {
 
     public ArrayList<Product> getAllProducts() {
         return products;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Category category = (Category) o;
+        return Objects.equals(categoryName, category.categoryName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(categoryName);
     }
 
     @Override

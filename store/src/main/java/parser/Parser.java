@@ -14,12 +14,12 @@ public class Parser {
         ParserHandler handler = new ParserHandler();
         try {
             SAXParser parser = factory.newSAXParser();
-            File file = new File("consoleApp/src/main/resources/config.xml");
+            File file = new File("store/src/main/resources/config.xml");
             parser.parse(file, handler);
         } catch (Exception e) {
-            System.out.println("Exception");
+            System.out.println("Parser was not created. " + e);
+            e.printStackTrace();
         }
         return handler.getRoot();
-
     }
 }
