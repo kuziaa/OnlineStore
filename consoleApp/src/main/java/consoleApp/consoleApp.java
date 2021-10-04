@@ -1,16 +1,14 @@
 package consoleApp;
 
-import randomStorePopulator.RandomStorePopulator;
-import store.Store;
+import storeApp.StoreApp;
 
 public class consoleApp {
     public static void main(String[] args) {
-        Store myStore = new Store();
-        RandomStorePopulator rsp = new RandomStorePopulator();
-        rsp.fillOnlineStore(myStore);
-        myStore.showInfo();
+        StoreApp myStoreApp = new StoreApp();
+        myStoreApp.fillStoreWithRandomCatAndProd();
+        myStoreApp.showInfo();
 
-        ConsoleHandler ch = new ConsoleHandler(myStore);
+        ConsoleHandler ch = new ConsoleHandler(myStoreApp);
         ch.run();
     }
 }

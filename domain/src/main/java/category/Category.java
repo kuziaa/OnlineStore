@@ -3,8 +3,6 @@ package category;
 import product.Product;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 public class Category {
 
@@ -46,14 +44,6 @@ public class Category {
     public void delAllProducts() {
         products.clear();
     }
-
-//    public ArrayList<String> getAllProductsInfo() {
-//        ArrayList <String> allProductsInfo = new ArrayList<>();
-//        for (Product product: products) {
-//            allProductsInfo.add(product.toString());
-//        }
-//        return allProductsInfo;
-//    }
 
     public ArrayList<Product> getAllProducts() {
         return products;

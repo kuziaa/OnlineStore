@@ -57,14 +57,6 @@ public class Store {
         return categoriesNames;
     }
 
-//    public ArrayList<String> getAllProductsInfo() {
-//        ArrayList<String> AllProductsInfo = new ArrayList<>();
-//        for (Category category: categories) {
-//            AllProductsInfo.addAll(category.getAllProductsInfo());
-//        }
-//        return AllProductsInfo;
-//    }
-
     public ArrayList<Product> getAllProducts() {
         ArrayList<Product> products = new ArrayList<>();
         for(Category category: categories) {

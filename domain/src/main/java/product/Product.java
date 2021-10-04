@@ -1,6 +1,5 @@
 package product;
 
-import java.util.Comparator;
 import java.util.Objects;
 
 public class Product {
