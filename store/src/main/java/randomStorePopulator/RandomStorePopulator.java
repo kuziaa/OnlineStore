@@ -54,7 +54,7 @@ public class RandomStorePopulator {
         for(String categoryName: availableCategories.keySet()) {
             store.addCategoryByClassName(categoryName);
             ArrayList<Product> products = getRandomProductsForCategory(categoryName);
-            store.addProductsInCategoryByName(products, categoryName);
+            store.addProductsInCategory(products, categoryName);
         }
     }
 }

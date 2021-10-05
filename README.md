@@ -24,4 +24,18 @@ Classes to create:
 
 When invoke main method, application should init store with categories and products and pretty print this data. Also, categories should be read dynamically (at runtime), from base category package using reflections lib.
 
+Status: Completed
+
+## Task #4
+Starting extend our store. Please append ability user to interact with our store, while sending commands thru read stream.
+
+Add support of such commands:
+
+sort - products from store according config. In resources folder create xml config file
+
+Config file can contains from 1 to N fields. Sort should be done using Comparator. Sort and print should not modify default store product lists and their order.
+top - print top 5 products sorted via price desc
+
+quit - exit app
+
 Status: In progress
