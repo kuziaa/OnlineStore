@@ -7,7 +7,7 @@ public interface ProductFactory {
     Faker faker = new Faker();
 
     default Product getProduct() {
-        return new Product(getName(), getPrice(), getRate());
+        return new Product(getName(), getRate(), getPrice());
     }
 
     String getName();

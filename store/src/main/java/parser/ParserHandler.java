@@ -16,7 +16,9 @@ public class ParserHandler extends DefaultHandler {
     private String currentTegName;
     private boolean isSort = false;
 
-    private final Root root = new Root();
+//    private final Root root = new Root();
+//    Will be rolled back just after task pass.
+    private final Root root = Root.getRoot();
     private final Sort sort = new Sort();
 
     public Root getRoot() {

@@ -38,4 +38,9 @@ top - print top 5 products sorted via price desc
 
 quit - exit app
 
-Status: In progress
+Status: Pass
+
+##Task #5
+Read all materials, try to find a proper place to your newly learned patterns in our app.
+
+Status: In progress...
