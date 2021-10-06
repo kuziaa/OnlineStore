@@ -11,14 +11,18 @@ import java.util.ArrayList;
 
 public class StoreApp {
 
-    private final Store myStore = new Store();
+    private Store store;
     private final Parser parser = new Parser();
     private final Root root = parser.parse();
     private final Sort sort = root.getSort();
 
+    public void setStore(Store store) {
+        this.store = store;
+    }
+
     public void fillStoreWithRandomCatAndProd() {
         RandomStorePopulator rsp = new RandomStorePopulator();
-        rsp.fillOnlineStore(myStore);
+        rsp.fillOnlineStore(store);
     }
 
     private ArrayList<Product> getSortedProducts(ArrayList<Product> products, Sort sort) {
@@ -61,19 +65,19 @@ public class StoreApp {
     }
 
     public void printAllSortedProducts() {
-        ArrayList<Product> sortedProducts = getSortedProducts(myStore.getAllProducts(), sort);
+        ArrayList<Product> sortedProducts = getSortedProducts(store.getAllProducts(), sort);
         sortedProducts.forEach(System.out::println);
     }
 
     public void printFiveMostExpensiveProducts() {
         Sort sort = new Sort("no", "desc", "no");
-        ArrayList<Product> sortedProducts = getSortedProducts(myStore.getAllProducts(), sort);
+        ArrayList<Product> sortedProducts = getSortedProducts(store.getAllProducts(), sort);
         for(int i = 0; i < 5; i++) {
             System.out.println(sortedProducts.get(i));
         }
     }
 
     public void showInfo() {
-        myStore.showInfo();
+        store.showInfo();
     }
 }

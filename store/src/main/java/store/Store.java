@@ -7,8 +7,12 @@ import product.Product;
 import java.util.ArrayList;
 
 public class Store {
-
+    private String storeType;
     private final ArrayList<Category> categories = new ArrayList<>();
+
+    public void setStoreType(String storeType) {
+        this.storeType = storeType;
+    }
 
     private boolean addCategory(Category newCategory) {
         if (!categories.contains(newCategory)) {
@@ -46,6 +50,14 @@ public class Store {
             products.addAll(category.getAllProducts());
         }
         return products;
+    }
+
+    public ArrayList<String> getCategoriesNames() {
+        ArrayList<String> categoriesNames = new ArrayList<>();
+        for (Category category: categories) {
+            categoriesNames.add(category.getCategoryName());
+        }
+        return categoriesNames;
     }
 
     public void addProductInCategory(Product newProduct, String categoryName) {

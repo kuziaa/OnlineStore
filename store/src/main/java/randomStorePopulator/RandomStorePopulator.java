@@ -3,24 +3,7 @@ package randomStorePopulator;
 import product.*;
 import store.Store;
 
-import java.util.ArrayList;
-
 public class RandomStorePopulator {
-
-    ArrayList<String> categoriesNames = new ArrayList<>();
-    {
-        categoriesNames.add("Fruit");
-        categoriesNames.add("Sushi");
-        categoriesNames.add("Beer");
-        categoriesNames.add("Animal");
-        categoriesNames.add("Book");
-    }
-
-    private void addCategories(Store store) {
-        for (String categoryName: categoriesNames) {
-            store.addCategoryByName(categoryName);
-        }
-    }
 
     private void addProducts(String categoryName, Store store) {
         ProductFactory productFactory = ProductFactories.getProductFactory(categoryName);
@@ -32,8 +15,7 @@ public class RandomStorePopulator {
     }
 
     public void fillOnlineStore(Store store) {
-        for(String categoryName: categoriesNames) {
-            store.addCategoryByName(categoryName);
+        for(String categoryName: store.getCategoriesNames()) {
             addProducts(categoryName, store);
         }
     }
