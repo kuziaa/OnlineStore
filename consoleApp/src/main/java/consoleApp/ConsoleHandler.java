@@ -39,6 +39,7 @@ public class ConsoleHandler {
                     break;
             }
         }
+        sc.close();
     }
 
     private void help() {
