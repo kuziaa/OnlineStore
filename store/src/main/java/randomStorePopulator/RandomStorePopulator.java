@@ -52,7 +52,7 @@ public class RandomStorePopulator {
 
     public void fillOnlineStore(Store store) {
         for(String categoryName: availableCategories.keySet()) {
-            store.addCategoryByClassName(categoryName);
+            store.addCategoryByName(categoryName);
             ArrayList<Product> products = getRandomProductsForCategory(categoryName);
             store.addProductsInCategory(products, categoryName);
         }
