@@ -4,10 +4,12 @@ import model.Root;
 import model.Sort;
 import product.Product;
 import parser.Parser;
+import purchase.Purchase;
 import randomStorePopulator.RandomStorePopulator;
 import store.Store;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class StoreApp {
 
@@ -15,6 +17,7 @@ public class StoreApp {
     private final Parser parser = new Parser();
     private final Root root = parser.parse();
     private final Sort sort = root.getSort();
+    private final Purchase purchase = new Purchase();
 
     public void setStore(Store store) {
         this.store = store;
@@ -79,5 +82,18 @@ public class StoreApp {
 
     public void showInfo() {
         store.showInfo();
+    }
+
+    public void buyProduct() {
+        ArrayList<Product> sortedProducts = getSortedProducts(store.getAllProducts(), sort);
+        try {
+            purchase.buyByChoice(sortedProducts);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showBasket() {
+        purchase.showBasket();
     }
 }
