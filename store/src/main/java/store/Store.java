@@ -1,37 +1,33 @@
 package store;
 
 import category.Category;
+import category.CategoryFactory;
 import product.Product;
 
 import java.util.ArrayList;
 
 public class Store {
-
+    private String storeType;
     private final ArrayList<Category> categories = new ArrayList<>();
 
-    private void addCategory(Category newCategory) {
+    public void setStoreType(String storeType) {
+        this.storeType = storeType;
+    }
+
+    private boolean addCategory(Category newCategory) {
         if (!categories.contains(newCategory)) {
             categories.add(newCategory);
+            return true;
         } else {System.out.println("Category " + newCategory.getCategoryName() + " was not added. " +
                 "Category with such a name already existed");
+            return false;
         }
     }
 
-    public void addCategoryByClassName(String newCategoryClassName) {
-        try {
-            Class<?> clazz = Class.forName("category." + newCategoryClassName);
-            addCategoryByReflection(clazz);
-        } catch (ClassNotFoundException e) {
-            System.out.println("Class with name " + newCategoryClassName + " was not found.");
-        }
-    }
-
-    private void addCategoryByReflection(Class<?> newCategoryReflection) {
-        try {
-            addCategory((Category) newCategoryReflection.newInstance());
-        } catch (InstantiationException | IllegalAccessException e) {
-            System.out.println("Cannot create object from class " + newCategoryReflection.getName() + "\n" + e);
-        }
+    public boolean addCategoryByName(String newCategoryName) {
+        CategoryFactory categoryFactory = new CategoryFactory();
+        Category category = categoryFactory.createCategory(newCategoryName);
+        return addCategory(category);
     }
 
     public void delCategoryByName(String delCategoryName) {
@@ -54,6 +50,14 @@ public class Store {
             products.addAll(category.getAllProducts());
         }
         return products;
+    }
+
+    public ArrayList<String> getCategoriesNames() {
+        ArrayList<String> categoriesNames = new ArrayList<>();
+        for (Category category: categories) {
+            categoriesNames.add(category.getCategoryName());
+        }
+        return categoriesNames;
     }
 
     public void addProductInCategory(Product newProduct, String categoryName) {
