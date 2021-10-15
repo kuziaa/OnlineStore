@@ -2,9 +2,10 @@ package storeApp;
 
 import model.Root;
 import model.Sort;
+import model.SortOrder;
 import product.Product;
 import parser.Parser;
-import purchase.Purchase;
+import purchase.Cart;
 import randomStorePopulator.RandomStorePopulator;
 import store.Store;
 
@@ -17,7 +18,7 @@ public class StoreApp {
     private final Parser parser = new Parser();
     private final Root root = parser.parse();
     private final Sort sort = root.getSort();
-    private final Purchase purchase = new Purchase();
+    private final Cart cart = Cart.getCart();
 
     public void setStore(Store store) {
         this.store = store;
@@ -35,33 +36,42 @@ public class StoreApp {
             int nameComp = o1.getName().compareToIgnoreCase(o2.getName());
             int priceComp = Double.compare(o1.getPrice(), o2.getPrice());
             int rateComp = Double.compare(o1.getRate(), o2.getRate());
-            switch (sort.getNameOrder()) {
-                case "asc":
+
+            SortOrder nameSortOrder = SortOrder.valueOf(sort.getNameOrder());
+            switch (nameSortOrder) {
+                case asc:
                     if (nameComp != 0) return nameComp;
                     break;
-                case "desc":
+                case desc:
                     if (nameComp != 0) return -nameComp;
                     break;
-                case "no":
+                case no:
                     break;
             }
-            switch (sort.getPriceOrder()) {
-                case "asc":
+
+            SortOrder priceSortOrder = SortOrder.valueOf(sort.getPriceOrder());
+            switch (priceSortOrder) {
+                case asc:
                     if (priceComp != 0) return priceComp;
                     break;
-                case "desc":
+                case desc:
                     if (priceComp != 0) return -priceComp;
                     break;
-                case "no":
+                case no:
                     break;
+
             }
-            switch (sort.getRateOrder()) {
-                case "asc":
+
+            SortOrder rateSortOrder = SortOrder.valueOf(sort.getRateOrder());
+            switch (rateSortOrder) {
+                case asc:
                     return rateComp;
-                case "desc":
+                case desc:
                     return -rateComp;
-                default:
+                case no:
                     return 0;
+                default:
+                    throw new RuntimeException("Incorrect sort order described in config");
             }
         });
         return sortedProducts;
@@ -84,16 +94,68 @@ public class StoreApp {
         store.showInfo();
     }
 
-    public void buyProduct() {
-        ArrayList<Product> sortedProducts = getSortedProducts(store.getAllProducts(), sort);
-        try {
-            purchase.buyByChoice(sortedProducts);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    private void printProductsWithNumbers(ArrayList<Product> products) {
+        int i = 1;
+        System.out.println("0) Quit");
+
+        for (Product product: products) {
+            System.out.println(i + ") " + product);
+            i++;
         }
     }
 
-    public void showBasket() {
-        purchase.showBasket();
+    public void buyProductByChoice() {
+        ArrayList<Product> products = store.getAllProducts();
+        printProductsWithNumbers(products);
+        while (true) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            int productNumber = makeAChoice(products.size());
+            if (productNumber == 0) return;
+            buyProduct(products.get(productNumber - 1));
+        }
+    }
+
+    private void buyProduct(Product product) {
+        Thread buyingProduct = new Thread(() -> {
+            int delay = (int) (Math.random() * 29 + 1);
+            System.out.printf("Buying a %s. It will take %d seconds%n", product.getName(), delay);
+            try {
+                Thread.sleep(delay * 1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            cart.addProduct(product);
+            System.out.println(product.getName() + " has bought.");
+        });
+        buyingProduct.start();
+    }
+
+    private int makeAChoice(int maxNum) {
+        System.out.println("Choice a product you want to buy: ");
+        Scanner sc = new Scanner(System.in);
+        int choice;
+        while (true) {
+            try {
+                choice = Integer.parseInt(sc.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Incorrect choice. Try again.");
+                continue;
+            }
+
+            if (choice < 0 || choice > maxNum) {
+                System.out.println("Incorrect choice. Try again.");
+                continue;
+            }
+            break;
+        }
+        return choice;
+    }
+
+    public void showCart() {
+        cart.showCart();
     }
 }

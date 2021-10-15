@@ -31,11 +31,11 @@ public class ConsoleHandler {
                     storeApp.showInfo();
                     break;
                 case "buyProduct":
-                    storeApp.buyProduct();
+                    storeApp.buyProductByChoice();
                     help();
                     break;
-                case "showBasket":
-                    storeApp.showBasket();
+                case "showCart":
+                    storeApp.showCart();
                     break;
                 case "quit":
                     System.out.println("Bye!");
@@ -56,7 +56,7 @@ public class ConsoleHandler {
         System.out.println("top - print top 5 products sorted via price desc");
         System.out.println("showInfo - show info about store");
         System.out.println("buyProduct - open buy product console");
-        System.out.println("showBasket - show the products you already bought. Cleans every 2 minutes");
+        System.out.println("showCart - show the products you already bought. Cleans every 2 minutes");
         System.out.println("quit - exit the app");
     }
 }
