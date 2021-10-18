@@ -10,6 +10,7 @@ import randomStorePopulator.RandomStorePopulator;
 import store.Store;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class StoreApp {
@@ -37,38 +38,38 @@ public class StoreApp {
             int priceComp = Double.compare(o1.getPrice(), o2.getPrice());
             int rateComp = Double.compare(o1.getRate(), o2.getRate());
 
-            SortOrder nameSortOrder = SortOrder.valueOf(sort.getNameOrder());
+            SortOrder nameSortOrder = SortOrder.valueOf(sort.getNameOrder().toUpperCase());
             switch (nameSortOrder) {
-                case asc:
+                case ASC:
                     if (nameComp != 0) return nameComp;
                     break;
-                case desc:
+                case DESC:
                     if (nameComp != 0) return -nameComp;
                     break;
-                case no:
+                case NO:
                     break;
             }
 
-            SortOrder priceSortOrder = SortOrder.valueOf(sort.getPriceOrder());
+            SortOrder priceSortOrder = SortOrder.valueOf(sort.getPriceOrder().toUpperCase());
             switch (priceSortOrder) {
-                case asc:
+                case ASC:
                     if (priceComp != 0) return priceComp;
                     break;
-                case desc:
+                case DESC:
                     if (priceComp != 0) return -priceComp;
                     break;
-                case no:
+                case NO:
                     break;
 
             }
 
-            SortOrder rateSortOrder = SortOrder.valueOf(sort.getRateOrder());
+            SortOrder rateSortOrder = SortOrder.valueOf(sort.getRateOrder().toUpperCase());
             switch (rateSortOrder) {
-                case asc:
+                case ASC:
                     return rateComp;
-                case desc:
+                case DESC:
                     return -rateComp;
-                case no:
+                case NO:
                     return 0;
                 default:
                     throw new RuntimeException("Incorrect sort order described in config");
