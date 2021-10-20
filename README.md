@@ -38,9 +38,16 @@ top - print top 5 products sorted via price desc
 
 quit - exit app
 
-Status: Pass
+Status: Completed
 
 ##Task #5
 Read all materials, try to find a proper place to your newly learned patterns in our app.
+
+Status: Completed
+
+##Task #6
+Please implement create order functionality. Each order should be processed in separate thread. Whe user select product , generate the random int from 1 to 30, and create thread that will process selected order for selected time, and after it place the product in another collection (for example, purchased goods). And create one more thread, that will be executed periodically, e.g. ones in 2 mins, that will clean up purchased collection.
+
+You can implement this in "native" java methods but better and simplier to use java.util.concurrent package.
 
 Status: In progress...
