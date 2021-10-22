@@ -5,6 +5,7 @@ import category.CategoryFactory;
 import product.Product;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class Store {
     private String storeType;
@@ -45,18 +46,20 @@ public class Store {
     }
 
     public ArrayList<Product> getAllProducts() {
-        ArrayList<Product> products = new ArrayList<>();
-        for(Category category: categories) {
-            products.addAll(category.getAllProducts());
-        }
+
+        ArrayList<Product> products = categories.stream()
+                .flatMap(category -> category.getAllProducts().stream())
+                .collect(Collectors.toCollection(ArrayList::new));
+
         return products;
     }
 
     public ArrayList<String> getCategoriesNames() {
-        ArrayList<String> categoriesNames = new ArrayList<>();
-        for (Category category: categories) {
-            categoriesNames.add(category.getCategoryName());
-        }
+
+        ArrayList<String> categoriesNames = categories.stream()
+                .map(Category::getCategoryName)
+                .collect(Collectors.toCollection(ArrayList::new));
+
         return categoriesNames;
     }
 
