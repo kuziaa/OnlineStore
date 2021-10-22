@@ -10,8 +10,10 @@ import randomStorePopulator.RandomStorePopulator;
 import store.Store;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class StoreApp {
 
@@ -31,28 +33,28 @@ public class StoreApp {
     }
 
     private ArrayList<Product> getSortedProducts(ArrayList<Product> products, Sort sort) {
-        ArrayList<Product> sortedProducts = new ArrayList<>(products);
+        ArrayList<Product> sortedProducts = products.stream().
+                sorted((o1, o2) -> {
+                    int nameComp = o1.getName().compareToIgnoreCase(o2.getName());
+                    int priceComp = Double.compare(o1.getPrice(), o2.getPrice());
+                    int rateComp = Double.compare(o1.getRate(), o2.getRate());
 
-        sortedProducts.sort((o1, o2) -> {
-            int nameComp = o1.getName().compareToIgnoreCase(o2.getName());
-            int priceComp = Double.compare(o1.getPrice(), o2.getPrice());
-            int rateComp = Double.compare(o1.getRate(), o2.getRate());
+                    SortOrder nameSortOrder = SortOrder.valueOf(sort.getNameOrder().toUpperCase());
+                    int sortNameCoef = nameSortOrder.getSortCoef();
+                    nameComp *= sortNameCoef;
+                    if (nameComp != 0) return nameComp;
 
-            SortOrder nameSortOrder = SortOrder.valueOf(sort.getNameOrder().toUpperCase());
-            int sortNameCoef = nameSortOrder.getSortCoef();
-            nameComp *= sortNameCoef;
-            if (nameComp != 0) return nameComp;
+                    SortOrder priceSortOrder = SortOrder.valueOf(sort.getPriceOrder().toUpperCase());
+                    int sortPriceCoef = priceSortOrder.getSortCoef();
+                    priceComp *= sortPriceCoef;
+                    if (priceComp != 0) return priceComp;
 
-            SortOrder priceSortOrder = SortOrder.valueOf(sort.getPriceOrder().toUpperCase());
-            int sortPriceCoef = priceSortOrder.getSortCoef();
-            priceComp *= sortPriceCoef;
-            if (priceComp != 0) return priceComp;
+                    SortOrder rateSortOrder = SortOrder.valueOf(sort.getRateOrder().toUpperCase());
+                    int sortRateCoef = rateSortOrder.getSortCoef();
+                    rateComp *= sortRateCoef;
+                    return rateComp;
+                }).collect(Collectors.toCollection(ArrayList::new));
 
-            SortOrder rateSortOrder = SortOrder.valueOf(sort.getRateOrder().toUpperCase());
-            int sortRateCoef = rateSortOrder.getSortCoef();
-            rateComp *= sortRateCoef;
-            return rateComp;
-        });
         return sortedProducts;
     }
 
