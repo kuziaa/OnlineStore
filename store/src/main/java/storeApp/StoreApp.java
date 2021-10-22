@@ -65,10 +65,10 @@ public class StoreApp {
 
     public void printFiveMostExpensiveProducts() {
         Sort sort = new Sort("no", "desc", "no");
-        ArrayList<Product> sortedProducts = getSortedProducts(store.getAllProducts(), sort);
-        for(int i = 0; i < 5; i++) {
-            System.out.println(sortedProducts.get(i));
-        }
+
+        getSortedProducts(store.getAllProducts(), sort).stream()
+                .limit(5)
+                .forEach(System.out::println);
     }
 
     public void showInfo() {
