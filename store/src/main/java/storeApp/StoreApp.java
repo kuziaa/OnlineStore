@@ -39,41 +39,19 @@ public class StoreApp {
             int rateComp = Double.compare(o1.getRate(), o2.getRate());
 
             SortOrder nameSortOrder = SortOrder.valueOf(sort.getNameOrder().toUpperCase());
-            switch (nameSortOrder) {
-                case ASC:
-                    if (nameComp != 0) return nameComp;
-                    break;
-                case DESC:
-                    if (nameComp != 0) return -nameComp;
-                    break;
-                case NO:
-                    break;
-            }
+            int sortNameCoef = nameSortOrder.getSortCoef();
+            nameComp *= sortNameCoef;
+            if (nameComp != 0) return nameComp;
 
             SortOrder priceSortOrder = SortOrder.valueOf(sort.getPriceOrder().toUpperCase());
-            switch (priceSortOrder) {
-                case ASC:
-                    if (priceComp != 0) return priceComp;
-                    break;
-                case DESC:
-                    if (priceComp != 0) return -priceComp;
-                    break;
-                case NO:
-                    break;
-
-            }
+            int sortPriceCoef = priceSortOrder.getSortCoef();
+            priceComp *= sortPriceCoef;
+            if (priceComp != 0) return priceComp;
 
             SortOrder rateSortOrder = SortOrder.valueOf(sort.getRateOrder().toUpperCase());
-            switch (rateSortOrder) {
-                case ASC:
-                    return rateComp;
-                case DESC:
-                    return -rateComp;
-                case NO:
-                    return 0;
-                default:
-                    throw new RuntimeException("Incorrect sort order described in config");
-            }
+            int sortRateCoef = rateSortOrder.getSortCoef();
+            rateComp *= sortRateCoef;
+            return rateComp;
         });
         return sortedProducts;
     }
