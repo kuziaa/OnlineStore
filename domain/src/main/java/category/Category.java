@@ -14,6 +14,10 @@ public class Category {
     private final String categoryName;
     private final ArrayList<Product> products = new ArrayList<>();
 
+    public static long getId(String name) {
+        return 1;
+    }
+
     public String getCategoryName() {
         return categoryName;
     }

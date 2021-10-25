@@ -3,34 +3,49 @@ package product;
 import java.util.Objects;
 
 public class Product {
-    public Product(String name, double rate, double price) {
-        this.name = name;
-        this.rate = rate;
-        this.price = price;
-    }
 
-    private final String name;
+    private String name;
     private double rate;
     private double price;
+    private long category_id;
+
+    public Product() {
+    }
+
+    public static long getId(String name) {
+        return 1;
+    }
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public double getRate() {
         return rate;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
     public void setRate(double newRate) {
         rate = newRate;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
     public void setPrice(double newPrice) {
         price = newPrice;
+    }
+
+    public long getCategory_id() {
+        return category_id;
+    }
+
+    public void setCategory_id(long category_id) {
+        this.category_id = category_id;
     }
 
     @Override
@@ -50,6 +65,5 @@ public class Product {
     public String toString() {
         return "-" + getName() + " - " + getRate() + "% - " + getPrice() + "$";
     }
-
 
 }
