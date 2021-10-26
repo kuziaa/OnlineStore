@@ -1,8 +1,15 @@
 package product;
 
 import category.Category;
+import category.CategoryName;
 
 public class AnimalProductFactory implements ProductFactory {
+
+    long categoryId;
+
+    AnimalProductFactory(long categoryId) {
+        this.categoryId = categoryId;
+    }
 
     @Override
     public String getName() {
@@ -11,6 +18,6 @@ public class AnimalProductFactory implements ProductFactory {
 
     @Override
     public long getCategoryId() {
-        return Category.getId("Animal");
+        return categoryId;
     }
 }

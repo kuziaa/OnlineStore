@@ -1,8 +1,16 @@
 package product;
 
 import category.Category;
+import category.CategoryName;
 
 public class SushiProductFactory implements ProductFactory {
+
+    long categoryId;
+
+    SushiProductFactory(long categoryId) {
+        this.categoryId = categoryId;
+    }
+
     @Override
     public String getName() {
         return faker.food().sushi();
@@ -10,6 +18,6 @@ public class SushiProductFactory implements ProductFactory {
 
     @Override
     public long getCategoryId() {
-        return Category.getId("Sushi");
+        return categoryId;
     }
 }

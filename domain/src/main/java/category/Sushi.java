@@ -1,7 +1,7 @@
-package category;
-
-public class Sushi extends Category{
-    public Sushi() {
-        super("Sushi");
-    }
-}
+//package category;
+//
+//public class Sushi extends Category{
+//    public Sushi() {
+//        super("Sushi");
+//    }
+//}

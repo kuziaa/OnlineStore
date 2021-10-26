@@ -1,8 +1,16 @@
 package product;
 
 import category.Category;
+import category.CategoryName;
 
 public class BookProductFactory implements ProductFactory {
+
+    long categoryId;
+
+    BookProductFactory(long categoryId) {
+        this.categoryId = categoryId;
+    }
+
     @Override
     public String getName() {
         return faker.book().title();
@@ -10,6 +18,6 @@ public class BookProductFactory implements ProductFactory {
 
     @Override
     public long getCategoryId() {
-        return Category.getId("Book");
+        return categoryId;
     }
 }

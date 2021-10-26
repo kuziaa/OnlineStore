@@ -23,7 +23,7 @@ public interface ProductFactory {
         product.setName(getName());
         product.setPrice(getPrice());
         product.setRate(getRate());
-        product.setCategory_id(getCategoryId());
+        product.setCategoryId(getCategoryId());
         return product;
     }
 }

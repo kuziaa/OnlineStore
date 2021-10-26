@@ -1,15 +1,17 @@
 package consoleApp;
 
-import storeApp.MallStoreAppBuilder;
 import storeApp.StoreApp;
-import storeApp.StoreAppDirector;
 
 public class consoleApp {
     public static void main(String[] args) {
 
-        StoreAppDirector storeAppDirectorDirector = new StoreAppDirector();
-        storeAppDirectorDirector.setStoreAppBuilder(new MallStoreAppBuilder());
-        StoreApp storeApp = storeAppDirectorDirector.buildStoreApp();
+        StoreApp storeApp = new StoreApp.Builder()
+                .withStore()
+                .withParser()
+                .withRoot()
+                .withSort()
+                .withCart()
+                .build();
 
         storeApp.fillStoreWithRandomCatAndProd();
         storeApp.showInfo();

@@ -1,7 +1,7 @@
-package category;
-
-public class Fruit extends Category {
-    public Fruit() {
-        super("Fruit");
-    }
-}
+//package category;
+//
+//public class Fruit extends Category {
+//    public Fruit() {
+//        super("Fruit");
+//    }
+//}

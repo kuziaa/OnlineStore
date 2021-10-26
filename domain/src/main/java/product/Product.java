@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Product {
 
+    private long productId;
     private String name;
     private double rate;
     private double price;
@@ -12,8 +13,12 @@ public class Product {
     public Product() {
     }
 
-    public static long getId(String name) {
-        return 1;
+    public long getId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     public String getName() {
@@ -44,7 +49,7 @@ public class Product {
         return category_id;
     }
 
-    public void setCategory_id(long category_id) {
+    public void setCategoryId(long category_id) {
         this.category_id = category_id;
     }
 
@@ -63,7 +68,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return "-" + getName() + " - " + getRate() + "% - " + getPrice() + "$";
+        return "-" + getName() + " - " + getRate() + "% - " + getPrice() + "$" + " - " + getCategory_id();
     }
 
 }
