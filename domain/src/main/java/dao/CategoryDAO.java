@@ -9,17 +9,17 @@ import java.util.List;
 public interface CategoryDAO {
 
     //create
-    void add(Category category) throws SQLException;
+    void add(Category category);
 
-    List<Category> getAll() throws SQLException;
+    List<Category> getAll();
 
-    Category getById(int id) throws SQLException;
+    Category getById(int id);
 
-    Category getByName(CategoryName categoryName) throws SQLException;
+    Category getByName(CategoryName categoryName);
 
     //update
-    void update(Category category) throws SQLException;
+    void update(Category category);
 
     //delete
-    void delete(Category category) throws SQLException;
+    void delete(Category category);
 }

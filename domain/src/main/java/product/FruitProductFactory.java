@@ -1,13 +1,10 @@
 package product;
 
-import category.Category;
-import category.CategoryName;
-
 public class FruitProductFactory implements ProductFactory {
 
-    long categoryId;
+    int categoryId;
 
-    FruitProductFactory(long categoryId) {
+    FruitProductFactory(int categoryId) {
         this.categoryId = categoryId;
     }
 
@@ -17,7 +14,7 @@ public class FruitProductFactory implements ProductFactory {
     }
 
     @Override
-    public long getCategoryId() {
+    public int getCategoryId() {
         return categoryId;
     }
 }

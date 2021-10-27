@@ -7,12 +7,11 @@ import store.Store;
 
 public class RandomStorePopulator {
 
-    private void addProducts(CategoryName categoryName, long categoryId, Store store) {
+    private void addProducts(CategoryName categoryName, int categoryId, Store store) {
         ProductFactory productFactory = ProductFactories.getProductFactory(categoryName, categoryId);
         int numOfProducts = (int) (Math.random() * 10 + 1);
         for (int i = 0; i < numOfProducts; i++) {
             Product product = productFactory.getProduct();
-            System.out.println("add product: " + product.getName());
             store.addProduct(product);
         }
     }
@@ -26,10 +25,10 @@ public class RandomStorePopulator {
             store.addCategory(category);
 
             Category categoryFromDB = store.getCategoryByCategoryName(categoryName);
-            System.out.println(1);
-            System.out.println(categoryFromDB);
-            int categoryId = categoryFromDB.getId();
-            addProducts(categoryName, categoryId, store);
+            if (categoryFromDB != null) {
+                int categoryId = categoryFromDB.getId();
+                addProducts(categoryName, categoryId, store);
+            }
         }
     }
 }

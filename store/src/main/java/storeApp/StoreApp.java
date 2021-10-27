@@ -11,7 +11,6 @@ import store.Store;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -24,7 +23,7 @@ public class StoreApp {
     private Cart cart;
 
     public static class Builder {
-        private StoreApp storeApp;
+        private final StoreApp storeApp;
 
         public Builder() {
             storeApp = new StoreApp();
@@ -137,6 +136,7 @@ public class StoreApp {
     }
 
     private void buyProduct(Product product) {
+
         Thread buyingProduct = new Thread(() -> {
             int delay = (int) (Math.random() * 29 + 1);
             System.out.printf("Buying a %s. It will take %d seconds%n", product.getName(), delay);
@@ -170,6 +170,10 @@ public class StoreApp {
             break;
         }
         return choice;
+    }
+
+    public void clearStore() {
+        store.clearStore();
     }
 
     public void showCart() {

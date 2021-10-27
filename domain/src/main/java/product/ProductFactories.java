@@ -3,7 +3,7 @@ package product;
 import category.CategoryName;
 
 public class ProductFactories {
-    public static ProductFactory getProductFactory(CategoryName categoryName, long categoryId) {
+    public static ProductFactory getProductFactory(CategoryName categoryName, int categoryId) {
         switch (categoryName) {
             case ANIMAL:
                 return new AnimalProductFactory(categoryId);

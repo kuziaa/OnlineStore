@@ -2,9 +2,9 @@ package product;
 
 public class BeerProductFactory implements ProductFactory {
 
-    long categoryId;
+    int categoryId;
 
-    BeerProductFactory(long categoryId) {
+    BeerProductFactory(int categoryId) {
         this.categoryId = categoryId;
     }
 
@@ -14,7 +14,7 @@ public class BeerProductFactory implements ProductFactory {
     }
 
     @Override
-    public long getCategoryId() {
+    public int getCategoryId() {
         return categoryId;
     }
 }

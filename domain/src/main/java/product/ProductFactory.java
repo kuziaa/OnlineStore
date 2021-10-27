@@ -8,7 +8,7 @@ public interface ProductFactory {
 
     String getName();
 
-    long getCategoryId();
+    int getCategoryId();
 
     default double getPrice(){
         return faker.number().randomDouble(2, 30, 300);

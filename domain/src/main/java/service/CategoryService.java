@@ -11,32 +11,32 @@ import java.util.List;
 
 public class CategoryService extends Util implements CategoryDAO {
 
-    Connection connection = getConnection();
-
     @Override
-    public void add(Category category) throws SQLException {
+    public void add(Category category) {
+
         String sql = "INSERT INTO CATEGORIES (NAME) VALUES(?)";
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try (Connection connection = getConnection()) {
 
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, category.getName().toString());
-
             preparedStatement.executeUpdate();
+        } catch (SQLIntegrityConstraintViolationException e) {
+            System.out.printf("Category %s already exist in db", category.getName().toString());
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
         }
     }
 
     @Override
-    public List<Category> getAll() throws SQLException {
+    public List<Category> getAll() {
+
         List<Category> categories = new ArrayList<>();
         String sql = "SELECT * FROM CATEGORIES;";
 
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = getConnection()) {
+
+            Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) {
@@ -48,99 +48,99 @@ public class CategoryService extends Util implements CategoryDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
         }
         return categories;
     }
 
     @Override
-    public Category getById(int id) throws SQLException {
+    public Category getById(int id) {
+
         String sql = "SELECT * FROM CATEGORIES WHERE ID=?";
-        Category category = new Category();
+        Category category = null;
 
-        try(PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setLong(1, id);
+        try(Connection connection = getConnection()) {
 
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            category.setId(resultSet.getInt("ID"));
-            category.setName(CategoryName.valueOf(resultSet.getString("NAME")));
+            if (resultSet.next()) {
+                category = new Category();
+                category.setId(resultSet.getInt("ID"));
+                category.setName(CategoryName.valueOf(resultSet.getString("NAME")));
+            } else {
+                System.out.printf("There is no categories with id: %d", id);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
         }
         return category;
     }
 
     @Override
-    public Category getByName(CategoryName categoryName) throws SQLException {
+    public Category getByName(CategoryName categoryName) {
 
         String sql = "SELECT ID, NAME FROM CATEGORIES WHERE NAME=?";
-        Category category = new Category();
+        Category category = null;
 
-        try(PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try(Connection connection = getConnection()) {
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, categoryName.toString());
-
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            System.out.println("Category name: " + categoryName);
-
-            System.out.println("Result set: " + resultSet);
-
-            category.setId(resultSet.getInt("ID"));
-            category.setName(CategoryName.valueOf(resultSet.getString("NAME")));
+            if (resultSet.next()) {
+                category = new Category();
+                category.setId(resultSet.getInt("ID"));
+                category.setName(CategoryName.valueOf(resultSet.getString("NAME")));
+            } else {
+                System.out.printf("There is no categories with name: %s", categoryName);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
         }
         return category;
     }
 
     @Override
-    public void update(Category category) throws SQLException {
+    public void update(Category category) {
 
         String sql = "UPDATE CATEGORIES SET NAME=? WHERE ID=?";
 
-        try(PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try(Connection connection = getConnection()) {
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             preparedStatement.setString(1, category.getName().toString());
-            preparedStatement.setLong(5, category.getId());
-
+            preparedStatement.setInt(2, category.getId());
             preparedStatement.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
         }
     }
 
     @Override
-    public void delete(Category category) throws SQLException {
+    public void delete(Category category) {
 
         String sql = "DELETE FROM CATEGORIES WHERE ID=?";
 
-        try(PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try(Connection connection = getConnection()) {
 
-            preparedStatement.setLong(1, category.getId());
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, category.getId());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
+        }
+    }
+
+    public void deleteAllCategories() {
+        List<Category> categories = getAll();
+
+        for (Category category: categories) {
+            delete(category);
         }
     }
 }

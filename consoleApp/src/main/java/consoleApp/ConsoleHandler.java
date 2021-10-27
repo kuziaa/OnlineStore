@@ -37,6 +37,9 @@ public class ConsoleHandler {
                 case "showCart":
                     storeApp.showCart();
                     break;
+                case "clearStore":
+                    storeApp.clearStore();
+                    break;
                 case "quit":
                     System.out.println("Bye!");
                     break outer;
@@ -57,6 +60,7 @@ public class ConsoleHandler {
         System.out.println("showInfo - show info about store");
         System.out.println("buyProduct - open buy product console");
         System.out.println("showCart - show the products you already bought. Cleans every 2 minutes");
+        System.out.println("clearStore - delete all products and categories");
         System.out.println("quit - exit the app");
     }
 }

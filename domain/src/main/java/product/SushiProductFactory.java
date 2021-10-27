@@ -1,13 +1,10 @@
 package product;
 
-import category.Category;
-import category.CategoryName;
-
 public class SushiProductFactory implements ProductFactory {
 
-    long categoryId;
+    int categoryId;
 
-    SushiProductFactory(long categoryId) {
+    SushiProductFactory(int categoryId) {
         this.categoryId = categoryId;
     }
 
@@ -17,7 +14,7 @@ public class SushiProductFactory implements ProductFactory {
     }
 
     @Override
-    public long getCategoryId() {
+    public int getCategoryId() {
         return categoryId;
     }
 }
