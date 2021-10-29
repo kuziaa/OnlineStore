@@ -8,7 +8,7 @@ public class Product {
     private String name;
     private double rate;
     private double price;
-    private int category_id;
+    private int categoryId;
 
     public Product() {
     }
@@ -45,12 +45,12 @@ public class Product {
         price = newPrice;
     }
 
-    public int getCategory_id() {
-        return category_id;
+    public int getCategoryId() {
+        return categoryId;
     }
 
     public void setCategoryId(int category_id) {
-        this.category_id = category_id;
+        this.categoryId = category_id;
     }
 
     @Override

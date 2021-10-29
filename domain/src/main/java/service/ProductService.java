@@ -23,7 +23,7 @@ public class ProductService extends Util implements ProductDAO {
             preparedStatement.setString(1, product.getName());
             preparedStatement.setDouble(2, product.getPrice());
             preparedStatement.setDouble(3, product.getRate());
-            preparedStatement.setInt(4, product.getCategory_id());
+            preparedStatement.setInt(4, product.getCategoryId());
 
             preparedStatement.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
@@ -158,7 +158,7 @@ public class ProductService extends Util implements ProductDAO {
             preparedStatement.setString(1, product.getName());
             preparedStatement.setDouble(2, product.getPrice());
             preparedStatement.setDouble(3, product.getRate());
-            preparedStatement.setInt(4, product.getCategory_id());
+            preparedStatement.setInt(4, product.getCategoryId());
             preparedStatement.setInt(5, product.getId());
 
             preparedStatement.executeUpdate();
