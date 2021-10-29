@@ -10,16 +10,54 @@ import randomStorePopulator.RandomStorePopulator;
 import store.Store;
 
 import java.util.ArrayList;
-import java.util.Locale;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class StoreApp {
 
     private Store store;
-    private final Parser parser = new Parser();
-    private final Root root = parser.parse();
-    private final Sort sort = root.getSort();
-    private final Cart cart = Cart.getCart();
+    private Parser parser;
+    private Root root;
+    private Sort sort;
+    private Cart cart;
+
+    public static class Builder {
+        private final StoreApp storeApp;
+
+        public Builder() {
+            storeApp = new StoreApp();
+        }
+
+        public Builder withStore() {
+            storeApp.store = new Store();
+            return this;
+        }
+
+        public Builder withParser() {
+            storeApp.parser = new Parser();
+            return this;
+        }
+
+        public Builder withRoot() {
+            storeApp.root = storeApp.parser.parse();
+            return this;
+        }
+
+        public Builder withSort() {
+            storeApp.sort = storeApp.root.getSort();
+            return this;
+        }
+
+        public Builder withCart() {
+            storeApp.cart = Cart.getCart();
+            return this;
+        }
+
+        public StoreApp build() {
+            return storeApp;
+        }
+    }
 
     public void setStore(Store store) {
         this.store = store;
@@ -30,72 +68,49 @@ public class StoreApp {
         rsp.fillOnlineStore(store);
     }
 
-    private ArrayList<Product> getSortedProducts(ArrayList<Product> products, Sort sort) {
-        ArrayList<Product> sortedProducts = new ArrayList<>(products);
+    private List<Product> getSortedProducts(List<Product> products, Sort sort) {
+        List<Product> sortedProducts = products.stream().
+                sorted((o1, o2) -> {
+                    int nameComp = o1.getName().compareToIgnoreCase(o2.getName());
+                    int priceComp = Double.compare(o1.getPrice(), o2.getPrice());
+                    int rateComp = Double.compare(o1.getRate(), o2.getRate());
 
-        sortedProducts.sort((o1, o2) -> {
-            int nameComp = o1.getName().compareToIgnoreCase(o2.getName());
-            int priceComp = Double.compare(o1.getPrice(), o2.getPrice());
-            int rateComp = Double.compare(o1.getRate(), o2.getRate());
-
-            SortOrder nameSortOrder = SortOrder.valueOf(sort.getNameOrder().toUpperCase());
-            switch (nameSortOrder) {
-                case ASC:
+                    SortOrder nameSortOrder = SortOrder.valueOf(sort.getNameOrder().toUpperCase());
+                    int sortNameCoef = nameSortOrder.getSortCoef();
+                    nameComp *= sortNameCoef;
                     if (nameComp != 0) return nameComp;
-                    break;
-                case DESC:
-                    if (nameComp != 0) return -nameComp;
-                    break;
-                case NO:
-                    break;
-            }
 
-            SortOrder priceSortOrder = SortOrder.valueOf(sort.getPriceOrder().toUpperCase());
-            switch (priceSortOrder) {
-                case ASC:
+                    SortOrder priceSortOrder = SortOrder.valueOf(sort.getPriceOrder().toUpperCase());
+                    int sortPriceCoef = priceSortOrder.getSortCoef();
+                    priceComp *= sortPriceCoef;
                     if (priceComp != 0) return priceComp;
-                    break;
-                case DESC:
-                    if (priceComp != 0) return -priceComp;
-                    break;
-                case NO:
-                    break;
 
-            }
-
-            SortOrder rateSortOrder = SortOrder.valueOf(sort.getRateOrder().toUpperCase());
-            switch (rateSortOrder) {
-                case ASC:
+                    SortOrder rateSortOrder = SortOrder.valueOf(sort.getRateOrder().toUpperCase());
+                    int sortRateCoef = rateSortOrder.getSortCoef();
+                    rateComp *= sortRateCoef;
                     return rateComp;
-                case DESC:
-                    return -rateComp;
-                case NO:
-                    return 0;
-                default:
-                    throw new RuntimeException("Incorrect sort order described in config");
-            }
-        });
+                }).collect(Collectors.toCollection(ArrayList::new));
+
         return sortedProducts;
     }
 
     public void printAllSortedProducts() {
-        ArrayList<Product> sortedProducts = getSortedProducts(store.getAllProducts(), sort);
+        List<Product> sortedProducts = getSortedProducts(store.getAllProducts(), sort);
         sortedProducts.forEach(System.out::println);
     }
 
     public void printFiveMostExpensiveProducts() {
         Sort sort = new Sort("no", "desc", "no");
-        ArrayList<Product> sortedProducts = getSortedProducts(store.getAllProducts(), sort);
-        for(int i = 0; i < 5; i++) {
-            System.out.println(sortedProducts.get(i));
-        }
+
+        List<Product> sortedProducts = getSortedProducts(store.getAllProducts(), sort);
+        sortedProducts.stream().limit(5).forEach(System.out::println);
     }
 
     public void showInfo() {
         store.showInfo();
     }
 
-    private void printProductsWithNumbers(ArrayList<Product> products) {
+    private void printProductsWithNumbers(List<Product> products) {
         int i = 1;
         System.out.println("0) Quit");
 
@@ -106,7 +121,7 @@ public class StoreApp {
     }
 
     public void buyProductByChoice() {
-        ArrayList<Product> products = store.getAllProducts();
+        List<Product> products = store.getAllProducts();
         printProductsWithNumbers(products);
         while (true) {
             try {
@@ -121,6 +136,7 @@ public class StoreApp {
     }
 
     private void buyProduct(Product product) {
+
         Thread buyingProduct = new Thread(() -> {
             int delay = (int) (Math.random() * 29 + 1);
             System.out.printf("Buying a %s. It will take %d seconds%n", product.getName(), delay);
@@ -154,6 +170,10 @@ public class StoreApp {
             break;
         }
         return choice;
+    }
+
+    public void clearStore() {
+        store.clearStore();
     }
 
     public void showCart() {

@@ -3,34 +3,54 @@ package product;
 import java.util.Objects;
 
 public class Product {
-    public Product(String name, double rate, double price) {
-        this.name = name;
-        this.rate = rate;
-        this.price = price;
-    }
 
-    private final String name;
+    private int productId;
+    private String name;
     private double rate;
     private double price;
+    private int categoryId;
+
+    public Product() {
+    }
+
+    public int getId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public double getRate() {
         return rate;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
     public void setRate(double newRate) {
         rate = newRate;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
     public void setPrice(double newPrice) {
         price = newPrice;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int category_id) {
+        this.categoryId = category_id;
     }
 
     @Override
@@ -50,6 +70,5 @@ public class Product {
     public String toString() {
         return "-" + getName() + " - " + getRate() + "% - " + getPrice() + "$";
     }
-
 
 }

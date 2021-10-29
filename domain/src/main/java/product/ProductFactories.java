@@ -1,18 +1,20 @@
 package product;
 
+import category.CategoryName;
+
 public class ProductFactories {
-    public static ProductFactory getProductFactory(String categoryName) {
+    public static ProductFactory getProductFactory(CategoryName categoryName, int categoryId) {
         switch (categoryName) {
-            case "Animal":
-                return new AnimalProductFactory();
-            case "Beer":
-                return new BeerProductFactory();
-            case "Book":
-                return new BookProductFactory();
-            case "Fruit":
-                return new FruitProductFactory();
-            case "Sushi":
-                return new SushiProductFactory();
+            case ANIMAL:
+                return new AnimalProductFactory(categoryId);
+            case BEER:
+                return new BeerProductFactory(categoryId);
+            case BOOK:
+                return new BookProductFactory(categoryId);
+            case FRUIT:
+                return new FruitProductFactory(categoryId);
+            case SUSHI:
+                return new SushiProductFactory(categoryId);
             default:
                 throw new RuntimeException("Unknown product factory " + categoryName);
         }
