@@ -91,6 +91,7 @@ public class ProductService extends Util implements ProductDAO {
 
     @Override
     public Product getByName(String productName) {
+        aa
 
         String sql = "SELECT * FROM PRODUCTS WHERE NAME=?;";
         Product product = null;
