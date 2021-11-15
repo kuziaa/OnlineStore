@@ -1,25 +1,16 @@
 package dao;
 
-import category.Category;
-import category.CategoryName;
+import entity.Category;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface CategoryDAO {
 
-    //create
-    void add(Category category);
-
+    //read
     List<Category> getAll();
 
-    Category getById(int id);
+    Category getCategoryByName(String categoryName);
 
-    Category getByName(CategoryName categoryName);
-
-    //update
-    void update(Category category);
-
-    //delete
-    void delete(Category category);
+    //create
+    String add(Category category);
 }

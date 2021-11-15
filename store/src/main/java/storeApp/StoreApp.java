@@ -1,11 +1,10 @@
 package storeApp;
 
+import entity.Product;
 import model.Root;
 import model.Sort;
 import model.SortOrder;
-import product.Product;
 import parser.Parser;
-import purchase.Cart;
 import randomStorePopulator.RandomStorePopulator;
 import store.Store;
 
@@ -20,7 +19,7 @@ public class StoreApp {
     private Parser parser;
     private Root root;
     private Sort sort;
-    private Cart cart;
+//    private Cart cart;
 
     public static class Builder {
         private final StoreApp storeApp;
@@ -49,10 +48,10 @@ public class StoreApp {
             return this;
         }
 
-        public Builder withCart() {
-            storeApp.cart = Cart.getCart();
-            return this;
-        }
+//        public Builder withCart() {
+//            storeApp.cart = Cart.getCart();
+//            return this;
+//        }
 
         public StoreApp build() {
             return storeApp;
@@ -112,12 +111,12 @@ public class StoreApp {
 
     private void printProductsWithNumbers(List<Product> products) {
         int i = 1;
-        System.out.println("0) Quit");
 
         for (Product product: products) {
             System.out.println(i + ") " + product);
             i++;
         }
+        System.out.println("0) Quit");
     }
 
     public void buyProductByChoice() {
@@ -145,8 +144,8 @@ public class StoreApp {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            cart.addProduct(product);
-            System.out.println(product.getName() + " has bought.");
+            store.addProductToCart(product);
+            System.out.println(product.getName() + " was added to cart.");
         });
         buyingProduct.start();
     }
@@ -172,11 +171,16 @@ public class StoreApp {
         return choice;
     }
 
-    public void clearStore() {
-        store.clearStore();
-    }
+//    public void clearStore() {
+//        store.clearStore();
+//    }
 
     public void showCart() {
-        cart.showCart();
+        store.showCart();
+    }
+
+    public void cleanCart() {
+        store.cleanCart();
+        System.out.println("Cart was cleaned");
     }
 }
