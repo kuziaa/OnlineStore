@@ -10,7 +10,6 @@ public class consoleApp {
                 .withParser()
                 .withRoot()
                 .withSort()
-                .withCart()
                 .build();
 
         storeApp.fillStoreWithRandomCatAndProd();

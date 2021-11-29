@@ -1,6 +1,6 @@
-package product;
+package product_factory;
 
-import category.CategoryName;
+import entity.CategoryName;
 
 public class ProductFactories {
     public static ProductFactory getProductFactory(CategoryName categoryName, int categoryId) {

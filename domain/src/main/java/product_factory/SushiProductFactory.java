@@ -1,4 +1,4 @@
-package product;
+package product_factory;
 
 public class SushiProductFactory implements ProductFactory {
 

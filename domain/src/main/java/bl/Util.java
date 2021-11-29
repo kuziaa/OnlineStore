@@ -1,25 +1,63 @@
 package bl;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import entity.Category;
+import entity.Product;
+import io.restassured.specification.RequestSpecification;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static io.restassured.RestAssured.*;
 
 public class Util {
 
-    private static final String DB_DRIVER = "org.h2.Driver";
-    private static final String DB_URL = "jdbc:h2:~/test";
-    private static final String DB_USERNAME = "Anton";
-    private static final String DB_PASSWORD = "1234";
+    protected final String BASE_URL = "http://localhost:8080";
+    protected final String PRODUCTS = "/products";
+    protected final String CATEGORIES = "/categories";
+    protected final String CART = "/cart";
 
-    public Connection getConnection() {
-        Connection connection = null;
-        try {
-            Class.forName(DB_DRIVER);
-            connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+    private final String LOGIN = "anton";
+    private final String PASSWORD = "anton";
 
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-        return connection;
+    private final Map<String, String> headers = new HashMap<>();
+
+    {
+        headers.put("content-type", "application/json");
     }
+
+    public RequestSpecification getRequestSpecification() {
+
+        RequestSpecification requestSpecification =
+                given()
+                    .auth()
+                    .basic(LOGIN, PASSWORD)
+                    .headers(headers);
+
+        return requestSpecification;
+    }
+
+    public RequestSpecification getRequestSpecification(Product product) {
+
+        RequestSpecification requestSpecification =
+                given()
+                        .auth()
+                        .basic(LOGIN, PASSWORD)
+                        .headers(headers)
+                        .body(product);
+
+        return requestSpecification;
+    }
+
+    public RequestSpecification getRequestSpecification(Category category) {
+
+        RequestSpecification requestSpecification =
+                given()
+                        .auth()
+                        .basic(LOGIN, PASSWORD)
+                        .headers(headers)
+                        .body(category);
+
+        return requestSpecification;
+    }
+
 }

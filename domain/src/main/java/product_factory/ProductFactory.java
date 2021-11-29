@@ -1,6 +1,7 @@
-package product;
+package product_factory;
 
 import com.github.javafaker.Faker;
+import entity.Product;
 
 public interface ProductFactory {
 

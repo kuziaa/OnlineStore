@@ -1,34 +1,35 @@
 package service;
 
 import bl.Util;
-import dao.ProductDAO;
+import dao.CartDAO;
+import entity.Product;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import entity.Product;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class ProductService extends Util implements ProductDAO {
+public class CartService extends Util implements CartDAO {
 
     @Override
-    public List<Product> getAll() {
-
+    public List<Product> getProductsFromCart() {
         Response response = getRequestSpecification()
-                .get(BASE_URL + PRODUCTS);
+                .get(BASE_URL + CART);
 
         List<Product> products = Arrays.asList(response.getBody().as(Product[].class));
         return products;
     }
 
     @Override
-    public String add(Product product) {
+    public void addProductToCart(Product product) {
 
         RequestSpecification requestSpecification = getRequestSpecification(product);
-        String msg = requestSpecification
-                .post(BASE_URL + PRODUCTS).getBody().asString();
-
-        return msg;
+        requestSpecification
+                .post(BASE_URL + CART);
     }
 
+    public void cleanCart() {
+        getRequestSpecification()
+                .delete(BASE_URL + CART);
+    }
 }

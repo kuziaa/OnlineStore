@@ -1,16 +1,16 @@
-package product;
+package product_factory;
 
-public class BeerProductFactory implements ProductFactory {
+public class BookProductFactory implements ProductFactory {
 
     int categoryId;
 
-    BeerProductFactory(int categoryId) {
+    BookProductFactory(int categoryId) {
         this.categoryId = categoryId;
     }
 
     @Override
     public String getName() {
-        return faker.beer().name();
+        return faker.book().title();
     }
 
     @Override

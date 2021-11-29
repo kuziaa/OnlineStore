@@ -1,24 +1,24 @@
-package product;
+package entity;
 
 import java.util.Objects;
 
 public class Product {
 
-    private int productId;
+    private int id;
     private String name;
     private double rate;
     private double price;
-    private int categoryId;
+    private int category_id;
 
     public Product() {
     }
 
     public int getId() {
-        return productId;
+        return id;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -33,24 +33,24 @@ public class Product {
         return rate;
     }
 
-    public void setRate(double newRate) {
-        rate = newRate;
+    public void setRate(double rate) {
+        this.rate = rate;
     }
 
     public double getPrice() {
         return price;
     }
 
-    public void setPrice(double newPrice) {
-        price = newPrice;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public int getCategory_id() {
+        return category_id;
     }
 
     public void setCategoryId(int category_id) {
-        this.categoryId = category_id;
+        this.category_id = category_id;
     }
 
     @Override
@@ -70,5 +70,4 @@ public class Product {
     public String toString() {
         return "-" + getName() + " - " + getRate() + "% - " + getPrice() + "$";
     }
-
 }
